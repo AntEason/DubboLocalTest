@@ -1,0 +1,59 @@
+plugins {
+    id 'org.jetbrains.intellij' version '1.4.0'
+    id "io.freefair.lombok" version "5.3.0"
+    id 'java'
+}
+
+group group
+version version
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+repositories {
+    maven { url 'https://maven.aliyun.com/repository/public/' }
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation('org.apache.dubbo:dubbo:3.0.0') {
+        exclude group: 'org.springframework'
+    }
+    implementation 'org.apache.dubbo:dubbo-dependencies-zookeeper:3.0.0'
+    implementation 'cn.hutool:hutool-all:5.7.22'
+    implementation 'org.apache.dubbo:dubbo-registry:3.0.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+runIde {
+//    autoReloadPlugins = true
+    jvmArgs '--add-exports', 'java.base/jdk.internal.vm=ALL-UNNAMED'
+}
+
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version = ideaVersion
+    plugins = ['com.intellij.java']
+//    plugins 'java'
+    pluginName = name
+    // 插件生成的临时文件的地址，可以省略
+//    sandboxDirectory = project.rootDir.canonicalPath + "/.sandbox"
+}
+
+patchPluginXml {
+    changeNotes = """
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>"""
+}
+
+publishPlugin {
+    token = System.getenv("publishToken")
+//    channels = publishChannels
+}
+
+test {
+    useJUnitPlatform()
+}

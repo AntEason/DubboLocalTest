@@ -1,0 +1,42 @@
+<idea-plugin>
+    <id>com.eason.dubbo</id>
+    <name>DubboLocalTest</name>
+    <vendor email="proyieason@gmail.com" url="https://github.com/AntEason">AntEason</vendor>
+    <dependencies>
+        Dubbo Rpc Local Test
+    </dependencies>
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
+<!--    <depends>com.intellij.openapi</depends>-->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <toolWindow id="DubboLocalTest"
+                    secondary="false"
+                    anchor="bottom"
+                    icon="/icons/dubbo.svg"
+                    factoryClass="com.eason.dubbo.window.DubboRpcToolWindow"/>
+        <applicationService serviceImplementation="com.eason.dubbo.db.DubboRpcConfig"/>
+        <applicationService serviceImplementation="com.eason.dubbo.db.RegisterCenterConfig"/>
+        <intentionAction>
+            <className>com.eason.dubbo.action.DubboLocalTestIntentionAction</className>
+        </intentionAction>
+        <applicationConfigurable parentId="tools" instance="com.eason.dubbo.config.AppSettingsConfigurable"
+                                 id="org.intellij.sdk.settings.AppSettingsConfigurable"
+                                 displayName="DubboLocalTest"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="DubboAcation"
+                class="com.eason.dubbo.action.DubboAcation"
+                text="DubboAcation"
+                description="DubboAcation"
+                icon="/icons/dubbo.svg"
+                popup="true">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
+</idea-plugin>
